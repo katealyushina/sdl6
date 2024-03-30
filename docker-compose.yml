@@ -11,9 +11,17 @@ services:
       - ./env1
     volumes:
       - ./app.log:/app/app.log
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:1.0
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 5s
+      timeout: 10s
+      retries: 120
     restart: always
     build:
       context: ./postgres/
