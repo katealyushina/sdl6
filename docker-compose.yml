@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+
+  app:
+    image: pinger:1.0
+    restart: always
+    build:
+      context: ./dotnet/PgConnect/
+    env_file:
+      - ./env1
+    volumes:
+      - ./app.log:/app/app.log
+
+  db:
+    image: postgres:1.0
+    restart: always
+    build:
+      context: ./postgres/
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  # hashicorp:
+  #   image: hashicorp/vault
+  #   container_name: hashicorp-1
+  #   volumes:
+  #     - ./vault_file:/vault/file:rw
+  #     - ./vault_config:/vault/config:rw
+  #   ports:
+  #     - "8200:8200"
+  #   cap_add:
+  #     - IPC_LOCK
+  #   entrypoint: vault server -config=/vault/config/vault.json
+  #   environment:
+  #     - VAULT_ADDR=http://127.0.0.1:8200

@@ -1,0 +1,6 @@
+INTERVAL=3
+LOG_FILE_PATH=app.log
+VAULT_ADDR=http://hashicorp-1:8200
+APPROLE_ROLE_ID=a54776f5-58cd-5ef7-77ab-05cb4f8385af
+SECRET_PATH=db_criticalinfo
+SECRET_MOUNT=kv-v2
